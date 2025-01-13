@@ -3,7 +3,8 @@ from datetime import datetime
 def dias_restantes():
     today = datetime.now()
     end_year = datetime(today.year, 12, 31)
-    return (end_year - today).days
+    resultado=(end_year - today).days
+    return resultado
 
 def puntaje():
     hoy = datetime.now()
