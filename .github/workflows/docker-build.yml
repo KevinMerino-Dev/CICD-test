@@ -38,7 +38,7 @@ jobs:
       - name: Ejecutar pruebas unitarias
         run: python -m unittest discover -s . -p "test_*.py"
 
-      - name: Probar el contenedor Docker (Ejecutar pruebas dentro del contenedor)
+      - name: Ejecutando pruebas en el Contenedor
         run: docker run --rm ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest python -m unittest discover -s . -p "test_*.py"
 #  push: #5
 #    runs-on: ubuntu-latest
