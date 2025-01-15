@@ -28,6 +28,7 @@ jobs:
             echo "CACHE_EXISTS=true" >> $GITHUB_ENV
           else
             echo "CACHE_EXISTS=false" >> $GITHUB_ENV
+          fi
 
   build: # 3. Construir imagen Docker
     runs-on: ubuntu-latest
