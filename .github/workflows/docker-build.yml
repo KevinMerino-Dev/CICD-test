@@ -97,7 +97,7 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/cicd-test:cache
-      -name: Verificar push
+      - name: Verificar push
         run: |
           echo "OK, Image pushed to Docker Hub"
 
