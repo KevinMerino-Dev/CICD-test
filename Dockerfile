@@ -5,7 +5,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Se instalan las Dependencias
-COPY requirements.txt /app/ #se agrega el destino
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Instalamos pytest
