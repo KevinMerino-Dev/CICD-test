@@ -6,8 +6,7 @@ on:
       - main
 
 jobs:
-
-  login:  #1
+  login: #1
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -40,8 +39,7 @@ jobs:
         run: python -m unittest discover -s . -p "test_*.py"
 
       - name: Probar el contenedor Docker (Ejecutar pruebas dentro del contenedor)
-       run: docker run --rm ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest python -m unittest discover -s . -p "test_*.py" 
-
+        run: docker run --rm ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest python -m unittest discover -s . -p "test_*.py"
 #  push: #5
 #    runs-on: ubuntu-latest
 #    needs: test
@@ -55,5 +53,5 @@ jobs:
 #      - name: Subir la imagen a Docker Hub
 #        run: |
 #          docker tag cicd-test docker.io/<tu-usuario>/cicd-test:latest
-#          docker push docker.io/<tu-usuario>/cicd-test:latest 
+#          docker push docker.io/<tu-usuario>/cicd-test:latest
 
