@@ -28,7 +28,7 @@ jobs:
 
   build: #3
     runs-on: ubuntu-latest
-    needs: login
+    needs: import-docker-cache
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
