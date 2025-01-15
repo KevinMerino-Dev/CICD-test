@@ -28,9 +28,6 @@ jobs:
       - name: Construir la imagen Docker
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest .
 
-      - name: Subir la imagen a Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest
-
   test: #4
     runs-on: ubuntu-latest
     needs: build
