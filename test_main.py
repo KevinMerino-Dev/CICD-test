@@ -19,4 +19,4 @@ if __name__ == '__main__':
         unittest.main(exit=False)
     except SystemExit:
         pass
-    print(f"No hay errores y: faltan {dias_restantes()} días")
+    print(f"No hay errores y faltan {dias_restantes()} días")
