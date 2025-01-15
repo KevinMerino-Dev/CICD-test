@@ -13,6 +13,7 @@ RUN pip install pytest
 
 # Copia el script de Python al contenedor
 COPY main.py /app/
+COPY test_*.py /app/
 
 # Establece el comando por defecto para ejecutar el script
 CMD ["python", "main.py"]
