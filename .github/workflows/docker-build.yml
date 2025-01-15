@@ -52,6 +52,7 @@ jobs:
             docker build \
               --tag ${{ secrets.DOCKER_USERNAME }}/cicd-test:latest \
               .
+          fi
 
       - name: Verify Docker image built
         run: docker images
