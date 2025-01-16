@@ -1,57 +1,27 @@
-import subprocess
-import argparse
+import docker
 import json
+import sys
 
-def inspect_image(image_name, stage):
+def analyze_image(image_name):
+    client = docker.from_env()
     try:
-        print(f"--- Analyzing Docker Image ({stage} stage): {image_name} ---")
-        
-        # Obtener metadata
-        inspect_cmd = f"docker inspect {image_name}"
-        metadata = json.loads(subprocess.check_output(inspect_cmd, shell=True))
-        
-        # Extraer detalles clave
-        image_id = metadata[0]["Id"]
-        size = metadata[0]["Size"]
-        created = metadata[0]["Created"]
-        env_vars = metadata[0]["Config"].get("Env", [])
-        
-        # Guardar reporte
-        report = {
-            "stage": stage,
-            "image_id": image_id,
-            "size": size,
-            "created": created,
-            "env_vars": env_vars,
-        }
-        with open(f"{stage}_image_report.json", "w") as f:
-            json.dump(report, f, indent=4)
-
-        print(f"Report saved: {stage}_image_report.json")
+        # Fetch image details
+        image = client.images.get(image_name)
+        print(f"Image '{image_name}' found.")
+        print("Metadata:")
+        print(json.dumps(image.attrs, indent=4))
+    except docker.errors.ImageNotFound:
+        print(f"Image '{image_name}' not found.")
     except Exception as e:
-        print(f"Error inspecting image: {e}")
+        print(f"An error occurred: {e}")
 
-def history_image(image_name, stage):
-    try:
-        print(f"--- Docker Image History ({stage} stage): {image_name} ---")
-        history_cmd = f"docker history {image_name} --no-trunc --format '{{{{.CreatedBy}}}}'"
-        result = subprocess.check_output(history_cmd, shell=True).decode("utf-8").strip()
-        
-        history_report = {"stage": stage, "history": result.split("\n")}
-        with open(f"{stage}_image_history.json", "w") as f:
-            json.dump(history_report, f, indent=4)
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python analyze_image.py <image_name>")
+        sys.exit(1)
 
-        print(f"History report saved: {stage}_image_history.json")
-    except Exception as e:
-        print(f"Error fetching history: {e}")
+    image_name = sys.argv[1]
+    analyze_image(image_name)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Analyze Docker Image")
-    parser.add_argument("--image", required=True, help="Docker image name")
-    parser.add_argument("--stage", required=True, help="Pipeline stage (import/build/push)")
-    args = parser.parse_args()
-    
-
-    inspect_image(args.image, args.stage)
-
-    history_image(args.image, args.stage)
+    main()
